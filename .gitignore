@@ -9,3 +9,8 @@ Celebrities/indv/
 Celebrities/group/
 
 .DS_Store
+
+# Private data and generated reports
+Students/
+outputs/
+*.xlsx
