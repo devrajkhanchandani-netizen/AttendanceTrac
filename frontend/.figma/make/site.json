@@ -1,0 +1,10 @@
+{
+  "description": "AttendanceTrac enables teachers to efficiently take class attendance by uploading a single photo, streamlining the attendance process and enhancing classroom management.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
