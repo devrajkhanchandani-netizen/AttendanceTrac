@@ -54,9 +54,7 @@ database_path = OUTPUT_DIR / "face_database.pkl"
 with open(database_path, "wb") as f:
     pickle.dump(database, f)
 
-print("\n===================================")
 print("DATABASE CREATED")
-print("===================================")
 print(f"Saved to: {database_path}")
 
 for actor, images in database.items():
