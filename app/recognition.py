@@ -1,7 +1,3 @@
-"""Detect faces in a photo and match each one against the database.
-
-This module only RETURNS data. It does not print or draw anything.
-"""
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
@@ -17,12 +13,11 @@ from app.config import (
 
 @dataclass
 class FaceResult:
-    """What we learned about one detected face."""
-    index: int                      # 1-based position in this photo
-    box: Tuple[int, int, int, int]  # x, y, width, height
-    best_identity: Optional[str]    # closest enrolled identity (even if rejected)
-    similarity: float               # cosine similarity to that identity
-    decision: str                   # "match" | "review" | "unknown"
+    index: int
+    box: Tuple[int, int, int, int]
+    best_identity: Optional[str]
+    similarity: float
+    decision: str
 
 
 def cosine_similarity(a, b) -> float:
@@ -35,7 +30,6 @@ def cosine_similarity(a, b) -> float:
 
 
 def best_match(embedding, database: dict):
-    """Compare one embedding to every reference. Returns (identity, similarity)."""
     best_name, best_sim = None, -1.0
     for name, references in database.items():
         for reference in references:
@@ -48,7 +42,6 @@ def best_match(embedding, database: dict):
 def decide(similarity: float,
            accept: float = ACCEPT_THRESHOLD,
            review: float = REVIEW_THRESHOLD) -> str:
-    """Turn a similarity score into 'match', 'review' or 'unknown'."""
     if similarity >= accept:
         return "match"
     if similarity >= review:
@@ -57,9 +50,6 @@ def decide(similarity: float,
 
 
 def recognize_faces(image_path, database: dict) -> list:
-    """Detect every face in `image_path` and return a list of FaceResult."""
-    # Imported here so the rest of the app loads fast and can be tested
-    # without TensorFlow.
     from deepface import DeepFace
 
     try:
@@ -70,7 +60,6 @@ def recognize_faces(image_path, database: dict) -> list:
             enforce_detection=True,
         )
     except ValueError:
-        # DeepFace raises ValueError when it finds no face at all.
         return []
 
     results = []
